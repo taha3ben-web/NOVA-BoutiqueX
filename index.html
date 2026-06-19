@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NOVA BoutiqueX — نقطة بيع محلات الملابس من هاتفك</title>
+<meta name="description" content="NOVA BoutiqueX: حوّل هاتفك إلى نقطة بيع كاملة لمحل الملابس. باركود بالكاميرا، طباعة فواتير حرارية، تقارير، مزامنة، ويعمل بدون إنترنت." />
+<meta property="og:title" content="NOVA BoutiqueX — نقطة بيع من هاتفك" />
+<meta property="og:description" content="حوّل هاتفك إلى نقطة بيع كاملة لمحل الملابس. بلا حاسوب، بلا أنترنت، بلا تكاليف." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --purple:#6D28D9;
+    --purple-dark:#4C1D95;
+    --purple-light:#8B5CF6;
+    --pink:#EC4899;
+    --gold:#F5C518;
+    --gold-deep:#D4A017;
+    --ink:#1b1230;
+    --paper:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Cairo',system-ui,'Segoe UI',Tahoma,sans-serif;
+    color:#fff;
+    background:var(--purple-dark);
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+  a{text-decoration:none;color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  .gold{color:var(--gold)}
+
+  /* ===== NAV ===== */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(76,29,149,.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:20px}
+  .badge-x{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:34px;height:34px;border-radius:10px;
+    background:linear-gradient(135deg,var(--gold),var(--gold-deep));
+    color:#3a2c00;font-weight:900;font-size:20px;
+    box-shadow:0 4px 14px rgba(245,197,24,.4);
+  }
+  .nav .cta{background:var(--gold);color:#3a2c00;padding:9px 18px;border-radius:999px;font-weight:700;font-size:14px}
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(1200px 500px at 80% -10%, rgba(236,72,153,.35), transparent 60%),
+      linear-gradient(160deg,var(--purple) 0%, var(--purple-dark) 100%);
+    padding:70px 0 90px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background-image:radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px);
+    background-size:22px 22px;opacity:.5;
+  }
+  .hero-grid{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+  .eyebrow{display:inline-block;background:rgba(245,197,24,.15);color:var(--gold);
+    border:1px solid rgba(245,197,24,.35);padding:6px 14px;border-radius:999px;font-weight:700;font-size:13px;margin-bottom:18px}
+  h1{font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.25}
+  h1 .hl{color:var(--gold)}
+  .sub{font-size:clamp(16px,2.4vw,20px);color:#E9E0FF;margin:18px 0 30px;max-width:540px}
+  .btns{display:flex;gap:14px;flex-wrap:wrap}
+  .btn-primary{
+    background:linear-gradient(135deg,var(--gold),var(--gold-deep));
+    color:#3a2c00;font-weight:900;font-size:18px;
+    padding:16px 30px;border-radius:14px;display:inline-flex;align-items:center;gap:10px;
+    box-shadow:0 10px 30px rgba(245,197,24,.4);transition:transform .15s, box-shadow .15s;
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(245,197,24,.55)}
+  .btn-ghost{
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);
+    color:#fff;font-weight:700;font-size:16px;padding:16px 26px;border-radius:14px;
+    display:inline-flex;align-items:center;gap:8px;transition:background .15s;
+  }
+  .btn-ghost:hover{background:rgba(255,255,255,.16)}
+  .hint{margin-top:14px;font-size:13px;color:#C9BCEC}
+
+  /* phone mockup */
+  .phone{
+    position:relative;width:260px;margin:0 auto;
+    border:10px solid #16092e;border-radius:42px;
+    background:#0e0620;box-shadow:0 30px 70px rgba(0,0,0,.5);
+    aspect-ratio:9/19.5;overflow:hidden;
+  }
+  .phone .screen{
+    position:absolute;inset:0;
+    background:linear-gradient(160deg,var(--purple-light),var(--purple));
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:20px;
+  }
+  .phone .logo-big{font-size:30px;font-weight:900}
+  .phone .pill{background:rgba(255,255,255,.9);color:var(--purple-dark);border-radius:12px;padding:10px 14px;font-weight:700;font-size:13px;width:100%}
+  .phone .scan{font-size:54px;margin:6px 0}
+  .notch{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:90px;height:7px;border-radius:99px;background:#000;z-index:2}
+
+  /* ===== SECTION ===== */
+  section{padding:70px 0}
+  .section-title{text-align:center;font-size:clamp(24px,4vw,38px);font-weight:900;margin-bottom:10px}
+  .section-sub{text-align:center;color:#C9BCEC;max-width:620px;margin:0 auto 46px}
+  .bg-light{background:#F6F3FF;color:var(--ink)}
+  .bg-light .section-sub{color:#5b5276}
+
+  /* features */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .card{
+    background:#fff;border:1px solid #ECE6FA;border-radius:18px;padding:26px;
+    box-shadow:0 8px 24px rgba(76,29,149,.06);transition:transform .15s, box-shadow .15s;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(76,29,149,.12)}
+  .card .ico{font-size:36px;margin-bottom:12px}
+  .card h3{font-size:19px;color:var(--purple-dark);margin-bottom:8px}
+  .card p{color:#5b5276;font-size:15px}
+
+  /* compare */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px;margin:0 auto}
+  .col{border-radius:20px;padding:30px}
+  .col.old{background:#fff;border:2px dashed #e0b4b4}
+  .col.new{background:linear-gradient(160deg,var(--purple),var(--purple-dark));color:#fff;box-shadow:0 18px 40px rgba(76,29,149,.35)}
+  .col h3{font-size:22px;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+  .col.old h3{color:#b91c1c}
+  .col ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+  .col li{display:flex;gap:10px;align-items:flex-start;font-size:15px}
+  .col.old li{color:#7a3b3b}
+  .mark{font-weight:900;flex-shrink:0}
+  .col.old .mark{color:#dc2626}
+  .col.new .mark{color:var(--gold)}
+
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;counter-reset:s}
+  .step{background:#fff;border-radius:16px;padding:24px;border:1px solid #ECE6FA;position:relative}
+  .step::before{counter-increment:s;content:counter(s);
+    display:flex;align-items:center;justify-content:center;
+    width:38px;height:38px;border-radius:50%;background:var(--purple);color:#fff;font-weight:900;margin-bottom:12px}
+  .step h4{color:var(--purple-dark);font-size:16px;margin-bottom:6px}
+  .step p{color:#5b5276;font-size:14px}
+
+  /* download band */
+  .band{
+    text-align:center;
+    background:
+      radial-gradient(800px 300px at 50% 0%, rgba(236,72,153,.4), transparent 60%),
+      linear-gradient(160deg,var(--purple),var(--purple-dark));
+    padding:70px 20px;
+  }
+  .band h2{font-size:clamp(24px,4vw,36px);font-weight:900;margin-bottom:14px}
+  .band p{color:#E9E0FF;margin-bottom:28px}
+
+  /* footer */
+  footer{background:#160a2e;padding:40px 0;text-align:center;color:#B9A9E0;font-size:14px}
+  .socials{display:flex;gap:14px;justify-content:center;margin:18px 0}
+  .socials a{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.08);
+    display:flex;align-items:center;justify-content:center;font-size:20px;transition:background .15s}
+  .socials a:hover{background:var(--gold);color:#3a2c00}
+
+  @media(max-width:860px){
+    .hero-grid{grid-template-columns:1fr;text-align:center}
+    .sub{margin-left:auto;margin-right:auto}
+    .btns{justify-content:center}
+    .grid3{grid-template-columns:1fr}
+    .compare{grid-template-columns:1fr}
+    .steps{grid-template-columns:1fr 1fr}
+    .phone{margin-top:30px}
+  }
+  @media(max-width:480px){.steps{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="brand">
+      <span class="badge-x">X</span>
+      <span>NOVA Boutique<span class="gold">X</span></span>
+    </div>
+    <a href="#download" class="cta">تحميل التطبيق</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">✨ نقطة بيع لمحلات الملابس — من هاتفك</span>
+      <h1>حوّل هاتفك إلى <span class="hl">نقطة بيع كاملة</span> لمحل الملابس</h1>
+      <p class="sub">بلا حاسوب، بلا قارئ باركود مكلف، بلا درج كاشير. كل ما تحتاجه هاتفك فقط — وتطبيق <strong>NOVA Boutique<span class="gold">X</span></strong>.</p>
+      <div class="btns">
+        <a href="https://github.com/taha3ben-web/NOVA-BoutiqueX/releases/download/v1.0/NOVA-Boutique.apk" class="btn-primary" onclick="return startDownload(event)">⬇️ تحميل التطبيق (APK)</a>
+        <a href="#features" class="btn-ghost">اكتشف الميزات</a>
+      </div>
+      <p class="hint">📱 متوافق مع أجهزة أندرويد • مجاني • تحديثات مستمرة</p>
+    </div>
+    <div>
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="screen">
+          <div class="logo-big">NOVA Boutique<span class="gold">X</span></div>
+          <div class="scan">📷</div>
+          <div class="pill">امسح الباركود وابدأ البيع</div>
+          <div class="pill">🧾 طباعة فاتورة حرارية</div>
+          <div class="pill">🔄 مزامنة بين العمّال</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="bg-light">
+  <div class="wrap">
+    <h2 class="section-title">كل ما يحتاجه محلك في تطبيق واحد</h2>
+    <p class="section-sub">صُمّم خصيصًا لمحلات الملابس والبوتيكات — سريع، بسيط، وقوي.</p>
+    <div class="grid3">
+      <div class="card"><div class="ico">📷</div><h3>قراءة الباركود بالكاميرا</h3><p>امسح ملصق الباركود مباشرة بكاميرا هاتفك دون أي جهاز إضافي.</p></div>
+      <div class="card"><div class="ico">🧾</div><h3>طباعة فواتير حرارية</h3><p>اطبع فاتورة البيع فورًا عبر طابعة حرارية بالبلوتوث.</p></div>
+      <div class="card"><div class="ico">🏷️</div><h3>طباعة ملصقات المنتجات</h3><p>أنشئ واطبع ملصقات الباركود الخاصة بمنتجاتك بسهولة.</p></div>
+      <div class="card"><div class="ico">📊</div><h3>تقارير ذكية</h3><p>تابع مبيعاتك وأرباحك ومخزونك بتقارير واضحة لحظة بلحظة.</p></div>
+      <div class="card"><div class="ico">🔄</div><h3>مزامنة بين العمّال</h3><p>كل العاملين يرون نفس البيانات والمخزون في وقت واحد.</p></div>
+      <div class="card"><div class="ico">📶</div><h3>يعمل بدون إنترنت</h3><p>بِع وأنت أوفلاين تمامًا — تتزامن البيانات تلقائيًا عند عودة الاتصال.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section>
+  <div class="wrap">
+    <h2 class="section-title">ليش <span class="gold">NOVA Boutique<span class="gold">X</span></span> بدل العتاد القديم؟</h2>
+    <p class="section-sub">قارن بنفسك بين نقطة البيع التقليدية وتطبيقنا.</p>
+    <div class="compare">
+      <div class="col old">
+        <h3>❌ نقطة البيع التقليدية</h3>
+        <ul>
+          <li><span class="mark">✕</span> حاسوب + شاشة باهظة الثمن</li>
+          <li><span class="mark">✕</span> قارئ باركود + كيبورد + ماوس</li>
+          <li><span class="mark">✕</span> درج كاشير وأسلاك كثيرة</li>
+          <li><span class="mark">✕</span> تتوقف عند انقطاع الكهرباء</li>
+          <li><span class="mark">✕</span> تكلفة صيانة وتركيب عالية</li>
+        </ul>
+      </div>
+      <div class="col new">
+        <h3>✅ NOVA Boutique<span class="gold">X</span></h3>
+        <ul>
+          <li><span class="mark">✓</span> هاتفك فقط — في جيبك</li>
+          <li><span class="mark">✓</span> الكاميرا تقرأ الباركود</li>
+          <li><span class="mark">✓</span> طباعة حرارية بالبلوتوث</li>
+          <li><span class="mark">✓</span> يعمل بدون كهرباء وبدون إنترنت</li>
+          <li><span class="mark">✓</span> توفير كبير في المال</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALL STEPS -->
+<section class="bg-light">
+  <div class="wrap">
+    <h2 class="section-title">طريقة التثبيت في دقيقة</h2>
+    <p class="section-sub">لأن التطبيق خارج المتجر، اتبع هذه الخطوات البسيطة.</p>
+    <div class="steps">
+      <div class="step"><h4>حمّل الملف</h4><p>اضغط زر «تحميل التطبيق (APK)» في الأعلى.</p></div>
+      <div class="step"><h4>اسمح بالتثبيت</h4><p>عند الطلب، فعّل «السماح من هذا المصدر» في الإعدادات.</p></div>
+      <div class="step"><h4>ثبّت التطبيق</h4><p>افتح الملف الذي حمّلته واضغط «تثبيت».</p></div>
+      <div class="step"><h4>ابدأ البيع</h4><p>افتح NOVA BoutiqueX وابدأ إدارة محلك فورًا.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DOWNLOAD BAND -->
+<section id="download" class="band">
+  <div class="wrap">
+    <h2>جرّب NOVA Boutique<span class="gold">X</span> الآن مجانًا</h2>
+    <p>محلك كامل في جيبك — ابدأ خلال دقيقة.</p>
+    <a href="https://github.com/taha3ben-web/NOVA-BoutiqueX/releases/download/v1.0/NOVA-Boutique.apk" class="btn-primary" onclick="return startDownload(event)">⬇️ تحميل التطبيق (APK)</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand" style="justify-content:center;font-size:22px">
+      <span class="badge-x">X</span>
+      <span>NOVA Boutique<span class="gold">X</span></span>
+    </div>
+    <div class="socials">
+      <a href="#" title="TikTok">🎵</a>
+      <a href="#" title="WhatsApp">💬</a>
+      <a href="#" title="Instagram">📷</a>
+    </div>
+    <p>© 2026 NOVA BoutiqueX — جميع الحقوق محفوظة.</p>
+    <p style="margin-top:6px;font-size:12px;opacity:.7">نقطة بيع لمحلات الملابس تعمل على الهاتف</p>
+  </div>
+</footer>
+
+<iframe id="dlframe" style="display:none" title="download"></iframe>
+<div id="toast" style="position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#16a34a;color:#fff;padding:14px 22px;border-radius:12px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.35);opacity:0;transition:opacity .3s;z-index:9999;font-family:'Cairo',sans-serif;max-width:90%;text-align:center">⬇️ بدأ تحميل التطبيق... افتح شريط الإشعارات لمتابعة التنزيل</div>
+<script>
+  var APK_URL = "https://github.com/taha3ben-web/NOVA-BoutiqueX/releases/download/v1.0/NOVA-Boutique.apk";
+  function startDownload(e){
+    if(e && e.preventDefault) e.preventDefault();
+    document.getElementById('dlframe').src = APK_URL;
+    var t = document.getElementById('toast');
+    t.style.opacity = '1';
+    setTimeout(function(){ t.style.opacity = '0'; }, 6000);
+    return false;
+  }
+</script>
+</body>
+</html>
