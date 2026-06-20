@@ -123,14 +123,14 @@
   header { position: fixed; top: 0; left: 0; right: 0; z-index: 150; background: rgba(5,3,10,0.55); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border-bottom: 1px solid transparent; transition: background .35s var(--ease), border-color .35s var(--ease); }
   header.scrolled { background: rgba(7,4,16,0.9); border-bottom-color: var(--border-1); }
   .nav { display: flex; align-items: center; justify-content: space-between; height: 78px; }
-  .brand { display: flex; align-items: center; gap: 11px; font-family: var(--font-head); font-weight: 900; font-size: 21px; letter-spacing: -0.4px; }
-  .brand .logo-mark { width: 40px; height: 40px; border-radius: 12px; background: var(--gold-grad); color: #2a1d00; display: grid; place-items: center; font-weight: 900; font-size: 22px; box-shadow: var(--glow-gold); }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-head); font-weight: 900; font-size: 18px; letter-spacing: -0.3px; }
+  .brand .logo-mark { width: 44px; height: 44px; border-radius: 12px; object-fit: cover; box-shadow: 0 6px 18px rgba(124,58,237,.45); }
   .nav-links { display: flex; align-items: center; gap: 34px; }
   .nav-links a { font-weight: 600; font-size: 15.5px; color: var(--text-2); position: relative; }
   .nav-links a::after { content: ''; position: absolute; bottom: -6px; right: 0; width: 0; height: 2px; background: var(--gold-grad); transition: width .3s var(--ease); }
   .nav-links a:hover { color: var(--text-1); }
   .nav-links a:hover::after { width: 100%; }
-  .nav-cta { background: var(--gold-grad); color: #2a1d00; padding: 10px 24px; border-radius: var(--radius-pill); font-weight: 800; font-size: 14.5px; transition: transform .25s var(--ease), box-shadow .25s var(--ease); }
+  .nav-cta { background: var(--gold-grad); color: #2a1d00; padding: 10px 22px; border-radius: var(--radius-pill); font-weight: 800; font-size: 14px; white-space: nowrap; transition: transform .25s var(--ease), box-shadow .25s var(--ease); }
   .nav-cta:hover { transform: translateY(-2px); box-shadow: var(--glow-gold); }
   .nav-toggle { display: none; flex-direction: column; gap: 5px; padding: 8px; }
   .nav-toggle span { width: 26px; height: 2.5px; background: var(--text-1); border-radius: 2px; transition: .3s var(--ease); }
@@ -149,7 +149,7 @@
   /* ---------- 8. Hero ---------- */
   .hero { padding-top: 168px; padding-bottom: 110px; }
   .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 56px; align-items: center; }
-  .hero h1 { font-family: var(--font-head); font-weight: 900; font-size: clamp(38px, 5.6vw, 66px); line-height: 1.16; letter-spacing: -1.4px; margin-bottom: 24px; }
+  .hero h1 { font-family: var(--font-head); font-weight: 900; font-size: clamp(31px, 4.8vw, 54px); line-height: 1.18; letter-spacing: -1px; margin-bottom: 24px; }
   .hero h1 .hl { background: linear-gradient(120deg, #fff 0%, var(--gold-1) 60%, var(--gold-2) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
   .hero .sub { font-size: clamp(16px, 2.1vw, 20px); color: var(--text-2); max-width: 540px; margin-bottom: 34px; line-height: 1.85; }
   .hero .btns { display: flex; gap: 15px; flex-wrap: wrap; }
@@ -269,6 +269,13 @@
   .trial-feats { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 32px; position: relative; z-index: 1; }
   .trial-feats span { display: inline-flex; align-items: center; gap: 7px; background: rgba(255,255,255,0.04); border: 1px solid var(--border-1); padding: 8px 16px; border-radius: var(--radius-pill); font-size: 13.5px; font-weight: 700; color: var(--text-2); }
   .trial-feats svg { width: 15px; height: 15px; color: #34d399; }
+  .price-box { position: relative; z-index: 1; margin: 0 auto 30px; max-width: 380px; padding: 24px; border-radius: var(--radius-sm); background: rgba(245,197,24,0.06); border: 1px solid var(--border-gold); }
+  .price-box .price-tag { display: inline-block; background: linear-gradient(135deg, #EC4899, #F472B6); color: #fff; font-weight: 800; font-size: 12.5px; padding: 6px 15px; border-radius: var(--radius-pill); margin-bottom: 16px; box-shadow: 0 6px 16px rgba(236,72,153,.35); }
+  .price-row { display: flex; align-items: baseline; justify-content: center; gap: 14px; }
+  .price-old { font-size: 21px; font-weight: 700; color: var(--text-3); text-decoration: line-through; text-decoration-color: #F472B6; }
+  .price-new { font-family: var(--font-head); font-weight: 900; font-size: 46px; line-height: 1; background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .price-new small { font-size: 18px; -webkit-text-fill-color: var(--text-2); color: var(--text-2); }
+  .price-note { display: block; margin-top: 13px; font-size: 13px; color: var(--text-3); }
 
   /* ---------- 18. FAQ ---------- */
   .faq-list { max-width: 800px; margin: 0 auto; position: relative; z-index: 1; display: flex; flex-direction: column; gap: 14px; }
@@ -350,6 +357,7 @@
   }
   @media (max-width: 768px) {
     .nav-links { display: none; }
+    .nav-cta { display: none; }
     .nav-toggle { display: flex; }
     .gallery { grid-template-columns: repeat(2, 1fr); }
     .compare { grid-template-columns: 1fr; }
@@ -357,7 +365,7 @@
   }
   @media (max-width: 560px) {
     .features-grid, .testi-grid, .flow-grid, .stats-grid, .install-grid, .gallery { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 34px; }
+    .hero h1 { font-size: 29px; }
     .trial-card { padding: 40px 26px; }
     .compare .col { padding: 32px 24px; }
     section { padding: 64px 0; }
@@ -368,7 +376,7 @@
   <div id="progress"></div>
   <header id="site-header">
     <div class="wrap nav">
-      <a href="#top" class="brand"><span class="logo-mark">N</span><span>NOVA Boutique<span class="x-gold">X</span></span></a>
+      <a href="#top" class="brand"><img class="logo-mark" src="./assets/logo.png" alt="NOVA BoutiqueX" /><span>NOVA Boutique<span class="x-gold">X</span></span></a>
       <nav class="nav-links">
         <a href="#features">المميزات</a>
         <a href="#how">كيف يعمل</a>
@@ -376,7 +384,7 @@
         <a href="#trial">العرض</a>
         <a href="#faq">الأسئلة</a>
       </nav>
-      <a href="#download" class="nav-cta">تحميل </a>
+      <a href="#download" class="nav-cta">حمّل التطبيق</a>
       <button class="nav-toggle" id="navToggle" aria-label="القائمة"><span></span><span></span><span></span></button>
     </div>
   </header>
@@ -402,7 +410,7 @@
         </div>
         <div class="meta reveal d4">
           <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> يعمل بدون إنترنت</span>
-          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> واجهة عربية بالكامل</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> بالعربية والفرنسية</span>
           <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> بدون اشتراك شهري إجباري</span>
         </div>
       </div>
@@ -448,7 +456,7 @@
         <div class="feature reveal d2"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M7 14l3-3 4 4 5-6"/></svg></div><h3>تقارير وأرباح</h3><p>اعرف أرباحك ومبيعاتك يوميًا برسوم بيانية واضحة تفهمها بلمحة.</p></div>
         <div class="feature reveal d3"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 17h6M9 13h6M7 21h10a2 2 0 002-2V7l-5-5H7a2 2 0 00-2 2v15a2 2 0 002 2z"/></svg></div><h3>فواتير احترافية</h3><p>اطبع أو أرسل فاتورة أنيقة لكل زبون تحمل اسم محلك وشعارك.</p></div>
         <div class="feature reveal d4"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM4 21v-1a6 6 0 0112 0v1"/></svg></div><h3>زبائن وديون</h3><p>سجّل زبائنك وتابع الديون والدفعات بكل سهولة ودون أوراق.</p></div>
-        <div class="feature reveal d5"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a9 9 0 100 18 9 9 0 000-18zM3 12h18"/></svg></div><h3>نسخ احتياطي آمن</h3><p>بياناتك محفوظة ومحمية، لا تفقد شيئًا حتى لو غيّرت الهاتف.</p></div>
+        <div class="feature reveal d5"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 20h5v-1a4 4 0 00-3-3.87M9 20H2v-1a4 4 0 013-3.87M11 14a4 4 0 100-8 4 4 0 000 8zM16 7a4 4 0 010 7"/></svg></div><h3>عدة بائعين، محل واحد</h3><p>كل البائعين يعملون معًا في نفس المحل وتتزامن مبيعاتهم لحظيًا، ويعمل التطبيق بدون إنترنت (أوفلاين) مع نسخ احتياطي آمن.</p></div>
       </div>
     </div>
   </section>
@@ -460,14 +468,14 @@
       <div class="flow-grid">
         <div class="flow-step reveal"><div class="step-no">1</div><h4>امسح الباركود</h4><p>وجّه كاميرا الهاتف نحو باركود المنتج وسيُضاف تلقائيًا إلى السلة.</p></div>
         <div class="flow-step reveal d1"><div class="step-no">2</div><h4>أكّد السلة</h4><p>راجع الأصناف والأسعار، أضف خصمًا إن أردت، ثم تابع للدفع.</p></div>
-        <div class="flow-step reveal d2"><div class="step-no">3</div><h4>أصدر الفاتورة</h4><p>اطبع أو أرسل الفاتورة للزبون، وتُحدّث الأرباح والمخزون فورًا.</p></div>
+        <div class="flow-step reveal d2"><div class="step-no">3</div><h4>أصدر الفاتورة</h4><p>اطبع أو أرسل الفا��ورة للزبون، وتُحدّث الأرباح والمخزون فورًا.</p></div>
       </div>
     </div>
   </section>
 
   <section class="showcase" id="gallery">
     <div class="wrap">
-      <div class="section-head"><span class="eyebrow reveal">واجهة التطبيق</span><h2 class="section-title reveal d1">تصميم <span class="gold">عربي وفرنسي أنيق</span> وسهل الاستخدام</h2><p class="section-sub reveal d2">لقطات حقيقية من داخل التطبيق.</p></div>
+      <div class="section-head"><span class="eyebrow reveal">واجهة التطبيق</span><h2 class="section-title reveal d1">تصميم <span class="gold">عربي أنيق</span> وسهل الاستخدام</h2><p class="section-sub reveal d2">لقطات حقيقية من داخل التطبيق.</p></div>
       <div class="gallery">
         <div class="shot reveal"><div class="img-wrap"><img src="./assets/ui-products.jpg" alt="المنتجات" loading="lazy"></div><div class="cap">شاشة <span>المنتجات</span></div></div>
         <div class="shot reveal d1"><div class="img-wrap"><img src="./assets/ui-scanner.jpg" alt="الماسح" loading="lazy"></div><div class="cap">ماسح <span>الباركود</span></div></div>
@@ -528,7 +536,7 @@
       <div class="section-head"><span class="eyebrow reveal">فواتير وتقارير</span><h2 class="section-title reveal d1">فواتير <span class="gold">احترافية</span> تعكس صورة محلك</h2></div>
       <div class="receipts">
         <div class="receipt reveal"><img src="./assets/receipt-sale.png" alt="فاتورة بيع" loading="lazy"><h4>فاتورة بيع</h4><p>أنيقة وواضحة لكل زبون</p></div>
-        <div class="receipt reveal d1"><img src="./assets/receipt-report.png" alt="تقرير" loading="lazy"><h4>تقرير المبيعات</h4><p>ملخص يومي لأدائك</p></div>
+        <div class="receipt reveal d1"><img src="./assets/receipt-report.png" alt="تق��ير" loading="lazy"><h4>تقرير المبيعات</h4><p>ملخص يومي لأدائك</p></div>
       </div>
     </div>
   </section>
@@ -539,6 +547,11 @@
         <div class="trial-badge"><span><span class="big">30</span><br><span class="small">يوم مجانًا</span></span></div>
         <h3>جرّب كل المميزات مجانًا 🎁</h3>
         <p>فترة تجريبية كاملة 30 يومًا — بدون بطاقة وبدون التزام. جرّب وقرّر بنفسك.</p>
+        <div class="price-box reveal">
+          <span class="price-tag">🔥 عرض لفترة محدودة</span>
+          <div class="price-row"><span class="price-old">15000 دج</span><span class="price-new">11000<small> دج</small></span></div>
+          <span class="price-note">سعر التطبيق كاملاً دفعة واحدة — بدون اشتراك شهري</span>
+        </div>
         <div class="trial-feats"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> كل المميزات</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> بدون بطاقة بنكية</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> دعم مجاني</span></div>
         <a href="#download" class="btn btn-gold btn-lg">ابدأ الآن مجانًا</a>
       </div>
@@ -549,9 +562,9 @@
     <div class="wrap">
       <div class="section-head"><h2 class="section-title reveal">تجار يثقون بـ <span class="gold">NOVA</span></h2></div>
       <div class="testi-grid">
-        <div class="testi reveal"><div class="stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg></div><p class="quote">“وفّر عليّ ثمن جهاز كاشير كامل، وصرت أعرف أرباحي كل يوم بوضوح.”</p><div class="who"><span class="av">أ</span><div><div class="nm">أمين</div><div class="rl">محل ملابس رجالية</div></div></div></div>
-        <div class="testi reveal d1"><div class="stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg></div><p class="quote">“الواجهة عربية وسهلة، درّبت عاملي عليها في دقائق.”</p><div class="who"><span class="av">س</span><div><div class="nm">سارة</div><div class="rl">بوتيك نسائي</div></div></div></div>
-        <div class="testi reveal d2"><div class="stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg></div><p class="quote">“أحسن شيء أنه يعمل بدون إنترنت، والفواتير تطلع احترافية.”</p><div class="who"><span class="av">ي</span><div><div class="nm">يوسف</div><div class="rl">محل أحذية</div></div></div></div>
+        <div class="testi reveal"><div class="stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg></div><p class="quote">“تطبيق هايل ربي يحفظك خويا”</p><div class="who"><span class="av">أ</span><div><div class="nm">أمين</div><div class="rl">محل ملابس رجالية</div></div></div></div>
+        <div class="testi reveal d1"><div class="stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg></div><p class="quote">“حاجة مليحة كي ولات فتلفون برك كنا نعانو كي تروح التريسيتي”</p><div class="who"><span class="av">س</span><div><div class="nm">سارة</div><div class="rl">بوتيك نسائي</div></div></div></div>
+        <div class="testi reveal d2"><div class="stars"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg></div><p class="quote">“كيما سيستام تع الميكرو بصح كي ولا غير فتلفون خير مزية شفتو قبل مانشري الماتريال”</p><div class="who"><span class="av">ي</span><div><div class="nm">يوسف</div><div class="rl">محل ألبسة</div></div></div></div>
       </div>
     </div>
   </section>
@@ -600,7 +613,7 @@
     <div class="wrap">
       <div class="footer-top">
         <div class="footer-brand">
-          <a href="#top" class="brand"><span class="logo-mark">N</span><span>NOVA Boutique<span class="x-gold">X</span></span></a>
+          <a href="#top" class="brand"><img class="logo-mark" src="./assets/logo.png" alt="NOVA BoutiqueX" /><span>NOVA Boutique<span class="x-gold">X</span></span></a>
           <p>نقطة بيع ذكية لمحلات الملابس — بيع أسرع، تنظيم أفضل، وأرباح واضحة من هاتفك.</p>
         </div>
         <div class="footer-col"><h5>روابط</h5><a href="#features">المميزات</a><a href="#how">كيف يعمل</a><a href="#gallery">الواجهة</a><a href="#faq">الأسئلة</a></div>
