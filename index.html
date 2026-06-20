@@ -68,6 +68,7 @@
   /* ---------- 2. Reset & Base ---------- */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { overflow-anchor: none; }
   body {
     font-family: var(--font-body);
     background-color: var(--bg-base);
@@ -475,7 +476,7 @@
 
   <section class="showcase" id="gallery">
     <div class="wrap">
-      <div class="section-head"><span class="eyebrow reveal">واجهة التطبيق</span><h2 class="section-title reveal d1">تصميم <span class="gold">عربي وفرنسي أنيق</span> وسهل الاستخدام</h2><p class="section-sub reveal d2">لقطات حقيقية من داخل التطبيق.</p></div>
+      <div class="section-head"><span class="eyebrow reveal">واجهة التطبيق</span><h2 class="section-title reveal d1">تصميم <span class="gold">عربي أنيق</span> وسهل الاستخدام</h2><p class="section-sub reveal d2">لقطات حقيقية من داخل التطبيق.</p></div>
       <div class="gallery">
         <div class="shot reveal"><div class="img-wrap"><img src="./assets/ui-products.jpg" alt="المنتجات" loading="lazy"></div><div class="cap">شاشة <span>المنتجات</span></div></div>
         <div class="shot reveal d1"><div class="img-wrap"><img src="./assets/ui-scanner.jpg" alt="الماسح" loading="lazy"></div><div class="cap">ماسح <span>الباركود</span></div></div>
@@ -635,6 +636,11 @@
   <script>
   (function () {
     'use strict';
+    if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+    function toTop() { window.scrollTo(0, 0); }
+    toTop();
+    window.addEventListener('load', toTop);
+    window.addEventListener('pageshow', toTop);
     var header = document.getElementById('site-header');
     var progress = document.getElementById('progress');
     function onScroll() {
