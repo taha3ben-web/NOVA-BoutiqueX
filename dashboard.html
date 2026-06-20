@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>لوحة الإحصائيات — NOVA BoutiqueX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#05030A; --bg2:#0B0518; --surface:#130A24; --surface2:#1A0F30;
+    --border:rgba(255,255,255,.09); --border-gold:rgba(245,197,24,.30);
+    --t1:#F5F3FA; --t2:#B9B2CC; --t3:#776E8C;
+    --purple:#A78BFA; --pink:#F472B6;
+    --gold-grad:linear-gradient(135deg,#FDE68A 0%,#F5C518 45%,#D4A017 100%);
+    --green:#34d399;
+    --font-head:'Tajawal',sans-serif; --font-body:'Cairo',sans-serif;
+    --radius:20px; --radius-sm:14px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font-body);background:radial-gradient(1200px 700px at 80% -10%,#1a0f30 0%,transparent 55%),var(--bg);color:var(--t1);min-height:100vh;padding:24px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto}
+
+  /* Gate */
+  #gate{position:fixed;inset:0;z-index:100;background:rgba(5,3,10,.96);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:24px}
+  .gate-card{width:100%;max-width:380px;background:linear-gradient(160deg,var(--surface2),var(--bg2));border:1px solid var(--border-gold);border-radius:var(--radius);padding:38px 30px;text-align:center}
+  .gate-card .lock{width:64px;height:64px;margin:0 auto 18px;border-radius:50%;background:var(--gold-grad);display:grid;place-items:center;box-shadow:0 10px 30px rgba(245,197,24,.3)}
+  .gate-card .lock svg{width:30px;height:30px;color:#2a1d00}
+  .gate-card h1{font-family:var(--font-head);font-size:21px;margin-bottom:8px}
+  .gate-card p{color:var(--t2);font-size:14px;margin-bottom:22px}
+  .gate-card input{width:100%;padding:14px 16px;border-radius:var(--radius-sm);background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--t1);font-family:var(--font-body);font-size:16px;text-align:center;letter-spacing:2px;margin-bottom:14px}
+  .gate-card input:focus{outline:none;border-color:var(--border-gold)}
+  .gate-card button{width:100%;padding:14px;border:none;border-radius:var(--radius-sm);background:var(--gold-grad);color:#2a1d00;font-family:var(--font-head);font-weight:800;font-size:16px;cursor:pointer;transition:transform .2s}
+  .gate-card button:hover{transform:translateY(-2px)}
+  .gate-err{color:var(--pink);font-size:13px;min-height:18px;margin-top:4px}
+
+  /* Header */
+  .top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:26px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand .mk{width:46px;height:46px;border-radius:12px;object-fit:cover;box-shadow:0 6px 18px rgba(124,58,237,.45)}
+  .brand h1{font-family:var(--font-head);font-weight:900;font-size:20px;line-height:1.2}
+  .brand .x{background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .brand span.sub{display:block;font-size:12px;color:var(--t3);font-weight:600}
+  .top-actions{display:flex;align-items:center;gap:12px}
+  .upd{font-size:12px;color:var(--t3)}
+  .btn-refresh{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--t1);font-family:var(--font-body);font-weight:700;font-size:13.5px;cursor:pointer;transition:.2s}
+  .btn-refresh:hover{border-color:var(--border-gold);color:#fff}
+  .btn-refresh svg{width:16px;height:16px}
+  .btn-refresh.spin svg{animation:sp 1s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+
+  .private-tag{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:var(--gold-1,#F5C518);background:rgba(245,197,24,.08);border:1px solid var(--border-gold);padding:6px 13px;border-radius:999px;margin-bottom:22px}
+  .private-tag svg{width:14px;height:14px}
+
+  /* Cards */
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px}
+  .card{background:linear-gradient(160deg,var(--surface),var(--bg2));border:1px solid var(--border);border-radius:var(--radius);padding:22px;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+  .card:hover{border-color:var(--border-gold);transform:translateY(-3px)}
+  .card .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;margin-bottom:16px}
+  .card .ic svg{width:21px;height:21px}
+  .ic.p{background:rgba(167,139,250,.14);color:var(--purple)}
+  .ic.g{background:rgba(245,197,24,.14);color:#F5C518}
+  .ic.k{background:rgba(244,114,182,.14);color:var(--pink)}
+  .ic.e{background:rgba(52,211,153,.14);color:var(--green)}
+  .card .val{font-family:var(--font-head);font-weight:900;font-size:34px;line-height:1}
+  .card .lbl{color:var(--t2);font-size:13.5px;margin-top:6px;font-weight:600}
+  .card .sub{color:var(--t3);font-size:12px;margin-top:8px}
+
+  .row2{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+  .panel{background:linear-gradient(160deg,var(--surface),var(--bg2));border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+  .panel h2{font-family:var(--font-head);font-weight:800;font-size:16.5px;margin-bottom:4px}
+  .panel .hint{color:var(--t3);font-size:12.5px;margin-bottom:20px}
+  .avg-big{font-family:var(--font-head);font-weight:900;font-size:30px;margin-bottom:18px}
+  .avg-big small{font-size:15px;color:var(--t2);font-weight:700}
+
+  .bar-row{margin-bottom:15px}
+  .bar-row .bl{display:flex;justify-content:space-between;font-size:13px;color:var(--t2);margin-bottom:7px;font-weight:600}
+  .bar-row .bl b{color:var(--t1);font-weight:800}
+  .track{height:10px;border-radius:999px;background:rgba(255,255,255,.06);overflow:hidden}
+  .fill{height:100%;border-radius:999px;background:var(--gold-grad);width:0;transition:width .9s cubic-bezier(.22,1,.36,1)}
+  .fill.pp{background:linear-gradient(135deg,var(--purple),#7C3AED)}
+
+  .donut-wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap;justify-content:center}
+  .donut{width:150px;height:150px;border-radius:50%;background:conic-gradient(var(--purple) 0deg,var(--purple) 0deg,#2a2040 0deg);position:relative;flex-shrink:0}
+  .donut::after{content:'';position:absolute;inset:20px;border-radius:50%;background:var(--bg2)}
+  .donut .ctr{position:absolute;inset:0;display:grid;place-items:center;text-align:center;z-index:1}
+  .donut .ctr b{font-family:var(--font-head);font-size:22px;font-weight:900;display:block}
+  .donut .ctr span{font-size:11px;color:var(--t3)}
+  .legend{display:flex;flex-direction:column;gap:12px}
+  .legend .li{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--t2);font-weight:600}
+  .legend .dot{width:12px;height:12px;border-radius:4px}
+  .legend .li b{color:var(--t1);margin-inline-start:auto;font-weight:800}
+
+  .footnote{margin-top:22px;color:var(--t3);font-size:12px;line-height:1.8;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 18px}
+  .footnote b{color:var(--t2)}
+
+  @media(max-width:860px){.grid{grid-template-columns:repeat(2,1fr)}.row2{grid-template-columns:1fr}}
+  @media(max-width:480px){.grid{grid-template-columns:1fr}.card .val{font-size:30px}}
+</style>
+</head>
+<body>
+
+  <!-- بوابة الحماية -->
+  <div id="gate">
+    <div class="gate-card">
+      <div class="lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+      <h1>لوحة خاصة</h1>
+      <p>أدخل رمز الدخول لعرض إحصائيات موقعك</p>
+      <input id="pass" type="password" inputmode="numeric" placeholder="• • • •" autocomplete="off" />
+      <button id="enter">دخول</button>
+      <div class="gate-err" id="gerr"></div>
+    </div>
+  </div>
+
+  <div class="wrap" id="app" style="display:none">
+    <div class="top">
+      <div class="brand">
+        <img class="mk" id="brandLogo" alt="NOVA BoutiqueX" />
+        <div>
+          <h1>NOVA Boutique<span class="x">X</span></h1>
+          <span class="sub">لوحة الإحصائيات الخاصة</span>
+        </div>
+      </div>
+      <div class="top-actions">
+        <span class="upd" id="updated">—</span>
+        <button class="btn-refresh" id="refresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg> تحديث</button>
+      </div>
+    </div>
+
+    <div class="private-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1l9 4v6c0 5-3.8 9.7-9 11-5.2-1.3-9-6-9-11V5l9-4z"/></svg> خاص بك — لا تشارك الرابط</div>
+
+    <!-- بطاقات رئيسية -->
+    <div class="grid">
+      <div class="card">
+        <div class="ic p"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <div class="val" id="visitors">—</div>
+        <div class="lbl">زوار فريدون</div>
+        <div class="sub" id="visitorsToday">&nbsp;</div>
+      </div>
+      <div class="card">
+        <div class="ic g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <div class="val" id="views">—</div>
+        <div class="lbl">مشاهدات الصفحة</div>
+        <div class="sub" id="viewsToday">&nbsp;</div>
+      </div>
+      <div class="card">
+        <div class="ic k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg></div>
+        <div class="val" id="downloads">—</div>
+        <div class="lbl">التنزيلات</div>
+        <div class="sub" id="downloadsToday">&nbsp;</div>
+      </div>
+      <div class="card">
+        <div class="ic e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M7 14l3-3 4 4 5-6"/></svg></div>
+        <div class="val" id="conv">—</div>
+        <div class="lbl">معدل التحويل</div>
+        <div class="sub">تنزيلات ÷ زوار</div>
+      </div>
+    </div>
+
+    <!-- مدة البقاء + الأجهزة -->
+    <div class="row2">
+      <div class="panel">
+        <h2>مدة البقاء داخل الصفحة</h2>
+        <div class="hint">توزيع الجلسات حسب المدة ومتوسط تقريبي</div>
+        <div class="avg-big">≈ <span id="avgDur">—</span> <small>متوسط البقاء</small></div>
+        <div class="bar-row"><div class="bl"><span>أقل من 30 ثانية</span><b id="d0">—</b></div><div class="track"><div class="fill" id="f0"></div></div></div>
+        <div class="bar-row"><div class="bl"><span>30 ثانية – دقيقتين</span><b id="d1">—</b></div><div class="track"><div class="fill" id="f1"></div></div></div>
+        <div class="bar-row"><div class="bl"><span>دقيقتان – 5 دقائق</span><b id="d2">—</b></div><div class="track"><div class="fill" id="f2"></div></div></div>
+        <div class="bar-row"><div class="bl"><span>أكثر من 5 دقائق</span><b id="d3">—</b></div><div class="track"><div class="fill" id="f3"></div></div></div>
+      </div>
+      <div class="panel">
+        <h2>الأجهزة</h2>
+        <div class="hint">هواتف مقابل حواسيب</div>
+        <div class="donut-wrap">
+          <div class="donut" id="donut"><div class="ctr"><b id="mobilePct">—</b><span>هواتف</span></div></div>
+          <div class="legend">
+            <div class="li"><span class="dot" style="background:#A78BFA"></span> الهواتف <b id="mobileN">—</b></div>
+            <div class="li"><span class="dot" style="background:#2a2040"></span> الحواسيب <b id="deskN">—</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footnote">
+      <b>ملاحظة:</b> تتحدّث الأرقام تلقائيًا كل 20 ثانية. «الزوار الفريدون» يُحسبون مرة واحدة لكل متصفّح، و«المشاهدات» تُحسب في كل فتحة للصفحة. الخدمة مجانية وبدون تسجيل، لذلك الأرقام تقريبية وليست دقيقة 100%.
+    </div>
+  </div>
+
+<script>
+(function(){
+  'use strict';
+  var NS='nova-boutiquex';
+  var BASE='https://abacus.jasoncameron.dev/get/'+NS+'/';
+  var PASS='1990';
+  var LOGO='';
+
+  /* شعار مضمّن (يُستبدل برابط اللوقو أو base64) */
+  var bl=document.getElementById('brandLogo');
+  bl.src = LOGO || './assets/logo.png';
+  bl.onerror=function(){ this.style.display='none'; };
+
+  /* بوابة الدخول */
+  var gate=document.getElementById('gate'), app=document.getElementById('app');
+  function unlock(){ gate.style.display='none'; app.style.display='block'; load(); start(); }
+  if(sessionStorage.getItem('nbx_auth')==='1'){ unlock(); }
+  document.getElementById('enter').addEventListener('click', tryPass);
+  document.getElementById('pass').addEventListener('keydown', function(e){ if(e.key==='Enter') tryPass(); });
+  function tryPass(){
+    var v=document.getElementById('pass').value.trim();
+    if(v===PASS){ sessionStorage.setItem('nbx_auth','1'); unlock(); }
+    else { document.getElementById('gerr').textContent='رمز غير صحيح'; }
+  }
+
+  function fmt(n){ return (n||0).toLocaleString('en-US'); }
+  function todayKey(){ var d=new Date(); function p(x){return x<10?'0'+x:''+x;} return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()); }
+  function get(key){
+    return fetch(BASE+key,{mode:'cors'}).then(function(r){return r.json();}).then(function(j){ return (j&&typeof j.value==='number')?j.value:0; }).catch(function(){ return 0; });
+  }
+  function secsToText(s){
+    if(s<60) return Math.round(s)+' ثانية';
+    var m=Math.floor(s/60), r=Math.round(s%60);
+    return m+' د '+(r?r+' ث':'');
+  }
+
+  function load(){
+    var btn=document.getElementById('refresh'); btn.classList.add('spin');
+    var t=todayKey();
+    Promise.all([
+      get('visitors'), get('views'), get('downloads'),
+      get('views-'+t), get('downloads-'+t),
+      get('dur-u30'), get('dur-30-120'), get('dur-120-300'), get('dur-o300'),
+      get('dev-mobile'), get('dev-desktop')
+    ]).then(function(a){
+      var visitors=a[0], views=a[1], downloads=a[2], viewsT=a[3], dlT=a[4];
+      var b=[a[5],a[6],a[7],a[8]];
+      var mob=a[9], desk=a[10];
+
+      document.getElementById('visitors').textContent=fmt(visitors);
+      document.getElementById('views').textContent=fmt(views);
+      document.getElementById('downloads').textContent=fmt(downloads);
+      document.getElementById('viewsToday').textContent='اليوم: '+fmt(viewsT);
+      document.getElementById('visitorsToday').textContent='إجمالي المتصفّحين';
+      document.getElementById('downloadsToday').textContent='اليوم: '+fmt(dlT);
+      var conv = visitors>0 ? (downloads/visitors*100) : 0;
+      document.getElementById('conv').textContent=conv.toFixed(1)+'%';
+
+      /* مدة البقاء */
+      var totalB=b[0]+b[1]+b[2]+b[3];
+      var mids=[15,75,210,420];
+      var avg = totalB>0 ? (b[0]*mids[0]+b[1]*mids[1]+b[2]*mids[2]+b[3]*mids[3])/totalB : 0;
+      document.getElementById('avgDur').textContent= totalB>0 ? secsToText(avg) : '—';
+      for(var i=0;i<4;i++){
+        var pct = totalB>0 ? Math.round(b[i]/totalB*100) : 0;
+        document.getElementById('d'+i).textContent=fmt(b[i])+' · '+pct+'%';
+        document.getElementById('f'+i).style.width=pct+'%';
+      }
+
+      /* الأجهزة */
+      var totD=mob+desk;
+      var mPct= totD>0 ? Math.round(mob/totD*100) : 0;
+      document.getElementById('mobilePct').textContent=mPct+'%';
+      document.getElementById('mobileN').textContent=fmt(mob);
+      document.getElementById('deskN').textContent=fmt(desk);
+      var deg = totD>0 ? (mob/totD*360) : 0;
+      document.getElementById('donut').style.background='conic-gradient(#A78BFA 0deg '+deg+'deg, #2a2040 '+deg+'deg 360deg)';
+
+      var d=new Date();
+      document.getElementById('updated').textContent='آخر تحديث: '+d.toLocaleTimeString('ar');
+      btn.classList.remove('spin');
+    });
+  }
+  document.getElementById('refresh').addEventListener('click', load);
+  var timer;
+  function start(){ clearInterval(timer); timer=setInterval(load, 20000); }
+})();
+</script>
+</body>
+</html>
