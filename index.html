@@ -2,7 +2,11 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#05030A" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="format-detection" content="telephone=no" />
   <title>تطبيقات NOVA — حمّل تطبيق الملابس وتطبيق الأفرشة</title>
   <meta name="description" content="حمّل تطبيقات NOVA: نقطة بيع لمحلات الملابس، ومتجر الأفرشة والمفروشات — مباشرة من هاتفك." />
   <meta property="og:title" content="تطبيقات NOVA" />
@@ -30,7 +34,7 @@
   }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{font-family:var(--font-body);background:var(--bg-base);color:var(--text-1);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  body{font-family:var(--font-body);background:var(--bg-base);color:var(--text-1);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;text-size-adjust:100%;-webkit-text-size-adjust:100%}
   a{text-decoration:none;color:inherit}
   img{display:block;max-width:100%}
   button{font-family:inherit;cursor:pointer;border:none;background:none}
@@ -83,6 +87,12 @@
   .app-card p{color:var(--text-2);font-size:14.5px;margin-bottom:20px;flex:1}
   .app-card .btn{width:100%}
   .app-card .meta{margin-top:12px;font-size:12.5px;color:var(--text-3)}
+  .eyebrow .dot{width:5px;height:5px;border-radius:50%;background:var(--gold-2);display:inline-block;flex:none}
+  .price{margin-bottom:18px;text-align:center}
+  .price-row{display:flex;align-items:baseline;justify-content:center;gap:10px;flex-wrap:wrap}
+  .price-now{font-family:var(--font-head);font-weight:900;font-size:26px;color:var(--gold-2);line-height:1}
+  .price-old{font-size:15px;color:var(--text-3);text-decoration:line-through}
+  .price-badge{display:inline-block;margin-top:9px;font-size:12px;font-weight:800;color:#3a0000;background:var(--gold-grad);padding:5px 14px;border-radius:var(--radius-pill);box-shadow:0 6px 18px rgba(245,197,24,.25)}
 
   /* steps */
   .steps{padding:46px 0}
@@ -108,9 +118,26 @@
   #toast svg{width:18px;height:18px;color:var(--gold-2)}
 
   @media(max-width:720px){
-    .apps-grid{grid-template-columns:1fr}
-    .steps-grid{grid-template-columns:1fr}
-    .hero-dl .btn{min-width:0;width:100%;max-width:340px}
+    .wrap{padding:0 16px}
+    .nav{height:58px}
+    .brand{font-size:16px}
+    .brand img{width:32px;height:32px}
+    .hero{padding:34px 0 22px}
+    .hero h1{font-size:30px}
+    .hero p.sub{margin-bottom:24px}
+    .apps{padding:20px 0 10px}
+    .apps-grid{grid-template-columns:1fr;gap:16px}
+    .steps{padding:32px 0}
+    .steps h2,.support h2{margin-bottom:24px}
+    .steps-grid{grid-template-columns:1fr;gap:14px}
+    .hero-dl{flex-direction:column;align-items:center;gap:12px}
+    .hero-dl .btn{min-width:0;width:100%;max-width:380px}
+    .btn{font-size:17px;padding:16px 22px}
+    .app-card{padding:26px 20px}
+  }
+  @media(max-width:380px){
+    .hero h1{font-size:26px}
+    .price-now{font-size:22px}
   }
   </style>
 </head>
@@ -130,7 +157,9 @@
       <div class="wrap">
         <span class="eyebrow">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
-          تطبيقان • تحميل مباشر
+          <span>تطبيقان</span>
+          <span class="dot"></span>
+          <span>تحميل مباشر</span>
         </span>
         <h1>حمّل تطبيقات <span class="gold">NOVA</span></h1>
         <p class="sub">اختر تطبيقك وابدأ التحميل فورًا — تطبيق نقطة البيع للملابس، وتطبيق الأفرشة والمفروشات. كل ما تحتاجه في مكان واحد.</p>
@@ -160,6 +189,13 @@
           <h3>NOVA BoutiqueX</h3>
           <div class="tag">تطبيق الملابس</div>
           <p>حوّل هاتفك إلى نقطة بيع كاملة لمحل الملابس: إدارة المنتجات، الفواتير، التقارير والمخزون بسهولة.</p>
+          <div class="price">
+            <div class="price-row">
+              <span class="price-now">4999 دج</span>
+              <span class="price-old">9500 دج</span>
+            </div>
+            <span class="price-badge">🔥 عرض محدود المدة</span>
+          </div>
           <a href="https://github.com/taha3ben-web/NOVA-BoutiqueX/releases/download/v1.0/NOVA-Boutique.apk" class="btn btn-gold" data-dl download>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
             تحميل التطبيق (APK)
@@ -172,6 +208,13 @@
           <h3>NOVA HOME</h3>
           <div class="tag">تطبيق الأفرشة</div>
           <p>متجر الأفرشة والمفروشات: تصفّح المنتجات، الطلبات والعروض الخاصة بالمفروشات المنزلية من هاتفك مباشرة.</p>
+          <div class="price">
+            <div class="price-row">
+              <span class="price-now">4999 دج</span>
+              <span class="price-old">9500 دج</span>
+            </div>
+            <span class="price-badge">🔥 عرض محدود المدة</span>
+          </div>
           <a href="https://github.com/taha3ben-web/NOVA-BoutiqueX/releases/download/v1.0/NOVA-HOME.apk" class="btn btn-purple" data-dl download>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
             تحميل التطبيق (APK)
