@@ -287,6 +287,19 @@
         hit(mob?'dev-mobile':'dev-desktop');
       }
     }catch(e){}
+    /* الموقع الجغرافي للزائر (مرة واحدة لكل متصفّح) */
+    try{
+      if(!localStorage.getItem('nbx_geo')){
+        fetch('https://ipwho.is/',{mode:'cors'}).then(function(r){return r.json();}).then(function(g){
+          var cc=(g&&g.country_code)?g.country_code:null; if(!cc) throw 0;
+          localStorage.setItem('nbx_geo',cc); hit('geo-'+cc);
+        }).catch(function(){
+          fetch('https://api.country.is/',{mode:'cors'}).then(function(r){return r.json();}).then(function(g){
+            if(g&&g.country){ localStorage.setItem('nbx_geo',g.country); hit('geo-'+g.country); }
+          }).catch(function(){});
+        });
+      }
+    }catch(e){}
     /* التنزيلات */
     document.querySelectorAll('a[download], a[data-dl], #dlClothing, #dlHome').forEach(function(a){
       a.addEventListener('click', function(){ hit('downloads'); hit('downloads-'+todayKey()); });
@@ -300,4 +313,3 @@
   </script>
 </body>
 </html>
-
