@@ -251,33 +251,60 @@
   var COUNTRIES=['DZ','MA','TN','LY','EG','MR','SD','SA','AE','QA','KW','BH','OM','YE','JO','LB','SY','IQ','PS','TR','FR','ES','IT','DE','GB','BE','NL','CH','SE','NO','PT','GR','RU','UA','PL','RO','AT','DK','IE','US','CA','MX','BR','AR','NG','SN','ML','NE','TD','CM','CI','GH','ET','KE','TZ','ZA','CD','CG','GA','BF','GN','BJ','TG','CN','JP','KR','IN','PK','BD','ID','MY','PH','TH','VN','SG','AU'];
   var NAMES={DZ:'الجزائر',MA:'المغرب',TN:'تونس',LY:'ليبيا',EG:'مصر',MR:'موريتانيا',SD:'السودان',SA:'السعودية',AE:'الإمارات',QA:'قطر',KW:'الكويت',BH:'البحرين',OM:'عُمان',YE:'اليمن',JO:'الأردن',LB:'لبنان',SY:'سوريا',IQ:'العراق',PS:'فلسطين',TR:'تركيا',FR:'فرنسا',ES:'إسبانيا',IT:'إيطاليا',DE:'ألمانيا',GB:'بريطانيا',BE:'بلجيكا',NL:'هولندا',CH:'سويسرا',SE:'السويد',NO:'النرويج',PT:'البرتغال',GR:'اليونان',RU:'روسيا',UA:'أوكرانيا',PL:'بولندا',RO:'رومانيا',AT:'النمسا',DK:'الدنمارك',IE:'أيرلندا',US:'الولايات المتحدة',CA:'كندا',MX:'المكسيك',BR:'البرازيل',AR:'الأرجنتين',NG:'نيجيريا',SN:'السنغال',ML:'مالي',NE:'النيجر',TD:'تشاد',CM:'الكاميرون',CI:'ساحل العاج',GH:'غانا',ET:'إثيوبيا',KE:'كينيا',TZ:'تنزانيا',ZA:'جنوب أفريقيا',CD:'الكونغو الديمقراطية',CG:'الكونغو',GA:'الغابون',BF:'بوركينا فاسو',GN:'غينيا',BJ:'بنين',TG:'توغو',CN:'الصين',JP:'اليابان',KR:'كوريا الجنوبية',IN:'الهند',PK:'باكستان',BD:'بنغلاديش',ID:'إندونيسيا',MY:'ماليزيا',PH:'الفلبين',TH:'تايلاند',VN:'فيتنام',SG:'سنغافورة',AU:'أستراليا'};
   function flag(cc){ try{ return cc.toUpperCase().replace(/./g,function(ch){ return String.fromCodePoint(127397+ch.charCodeAt(0)); }); }catch(e){ return ''; } }
-  var jvm=null;
+  var jvm=null, jvmReady=null;
+  var JVM=[
+    {css:'https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css', js:'https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js', map:'https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js'},
+    {css:'https://cdnjs.cloudflare.com/ajax/libs/jsvectormap/1.5.3/css/jsvectormap.min.css', js:'https://cdnjs.cloudflare.com/ajax/libs/jsvectormap/1.5.3/js/jsvectormap.min.js', map:'https://cdnjs.cloudflare.com/ajax/libs/jsvectormap/1.5.3/maps/world.js'},
+    {css:'https://cdn.jsdelivr.net/npm/jsvectormap@1.6.0/dist/css/jsvectormap.min.css', js:'https://cdn.jsdelivr.net/npm/jsvectormap@1.6.0/dist/js/jsvectormap.min.js', map:'https://cdn.jsdelivr.net/npm/jsvectormap@1.6.0/dist/maps/world.js'}
+  ];
+  function jvmOk(){ return typeof jsVectorMap!=='undefined' && jsVectorMap.maps && jsVectorMap.maps.world; }
+  function loadScript(src){ return new Promise(function(res,rej){ var el=document.createElement('script'); el.src=src; el.onload=function(){res();}; el.onerror=function(){rej();}; document.head.appendChild(el); }); }
+  function loadCss(href){ var l=document.createElement('link'); l.rel='stylesheet'; l.href=href; document.head.appendChild(l); }
+  function ensureJVM(){
+    if(jvmReady) return jvmReady;
+    var i=0;
+    function tryNext(){
+      if(jvmOk()) return Promise.resolve(true);
+      if(i>=JVM.length) return Promise.resolve(false);
+      var c=JVM[i++]; loadCss(c.css);
+      return loadScript(c.js).catch(function(){}).then(function(){ return loadScript(c.map).catch(function(){}); }).then(function(){ return jvmOk()?true:tryNext(); });
+    }
+    jvmReady=tryNext();
+    return jvmReady;
+  }
+  function getGeo(c){ return Promise.race([ get('geo-'+c), new Promise(function(r){ setTimeout(function(){ r(0); },7000); }) ]).then(function(v){ return {c:c,v:(typeof v==='number'?v:0)}; }).catch(function(){ return {c:c,v:0}; }); }
+  function renderGeoList(list,total){
+    var gl=document.getElementById('geoList'); if(!gl) return;
+    if(!list.length){ gl.innerHTML='<div class="geo-empty">لا توجد بيانات بعد — ستظهر الدول تلقائيًا عند دخول العملاء.</div>'; return; }
+    var html=''; list.forEach(function(o){ var pct= total>0?Math.round(o.v/total*100):0; html+='<div class="geo-row"><span class="flag">'+flag(o.c)+'</span><span class="cname">'+(NAMES[o.c]||o.c)+'</span><span class="cbar"><span style="width:'+pct+'%"></span></span><b>'+fmt(o.v)+' · '+pct+'%</b></div>'; });
+    gl.innerHTML=html;
+  }
+  function renderGeoMap(values){
+    var mp=document.getElementById('map'); if(!mp) return;
+    ensureJVM().then(function(ok){
+      if(!ok){ mp.innerHTML='<div class="geo-empty">تعذّر تحميل الخريطة من الإنترنت، لكن قائمة الدول بالأسفل تعمل.</div>'; return; }
+      if(jvm){ try{ jvm.destroy(); }catch(e){} jvm=null; }
+      mp.innerHTML='';
+      try{
+        jvm=new jsVectorMap({ selector:'#map', map:'world', zoomButtons:true, backgroundColor:'transparent',
+          regionStyle:{ initial:{ fill:'#241a3a', stroke:'#0b0518', strokeWidth:0.4 }, hover:{ fill:'#A78BFA' } },
+          series:{ regions:[{ attribute:'fill', scale:['#3a2b63','#F5C518'], normalizeFunction:'polynomial', values:values }] },
+          onRegionTooltipShow:function(event,tooltip,code){ var v=values[code]||0; tooltip.text((NAMES[code]||tooltip.text())+': '+v+' زائر', true); }
+        });
+      }catch(e){ mp.innerHTML='<div class="geo-empty">تعذّر رسم الخريطة.</div>'; }
+    });
+  }
   function loadGeo(){
-    var gl=document.getElementById('geoList'); if(gl){ gl.innerHTML='<div class="geo-empty">جارٍ تحميل بيانات الدول…</div>'; }
-    Promise.all(COUNTRIES.map(function(c){ return get('geo-'+c).then(function(v){ return {c:c,v:v}; }); })).then(function(arr){
+    var gl=document.getElementById('geoList'); if(gl) gl.innerHTML='<div class="geo-empty">جارٍ تحميل بيانات الدول…</div>';
+    Promise.all(COUNTRIES.map(getGeo)).then(function(arr){
       var values={}, list=[], total=0;
       arr.forEach(function(o){ if(o.v>0){ values[o.c]=o.v; total+=o.v; list.push(o); } });
       list.sort(function(a,b){ return b.v-a.v; });
-      var html='';
-      if(!list.length){ html='<div class="geo-empty">لا توجد بيانات بعد — ستظهر الدول على الخريطة تلقائيًا عند دخول العملاء.</div>'; }
-      else { list.forEach(function(o){ var pct= total>0?Math.round(o.v/total*100):0; html+='<div class="geo-row"><span class="flag">'+flag(o.c)+'</span><span class="cname">'+(NAMES[o.c]||o.c)+'</span><span class="cbar"><span style="width:'+pct+'%"></span></span><b>'+fmt(o.v)+' · '+pct+'%</b></div>'; }); }
-      if(gl) gl.innerHTML=html;
-      if(typeof jsVectorMap!=='undefined'){
-        if(jvm){ try{ jvm.destroy(); }catch(e){} jvm=null; }
-        var mp=document.getElementById('map');
-        if(mp){ mp.innerHTML='';
-          try{
-            jvm=new jsVectorMap({
-              selector:'#map', map:'world', zoomButtons:true, backgroundColor:'transparent',
-              regionStyle:{ initial:{ fill:'#241a3a', stroke:'#0b0518', strokeWidth:0.4 }, hover:{ fill:'#A78BFA', fillOpacity:1 } },
-              series:{ regions:[{ attribute:'fill', scale:['#3a2b63','#F5C518'], normalizeFunction:'polynomial', values:values }] },
-              onRegionTooltipShow:function(event,tooltip,code){ var v=values[code]||0; tooltip.text((NAMES[code]||tooltip.text())+': '+v+' زائر', true); }
-            });
-          }catch(e){}
-        }
-      }
+      renderGeoList(list,total);
+      renderGeoMap(values);
     });
   }
+  window.addEventListener('resize', function(){ if(jvm){ try{ jvm.updateSize(); }catch(e){} } });
 
   function load(){
     var btn=document.getElementById('refresh'); btn.classList.add('spin');
