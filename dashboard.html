@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsvectormap/1.5.3/css/jsvectormap.min.css" />
 <style>
   :root{
     --bg:#05030A; --bg2:#0B0518; --surface:#130A24; --surface2:#1A0F30;
@@ -98,6 +99,18 @@
 
   @media(max-width:860px){.grid{grid-template-columns:repeat(2,1fr)}.row2{grid-template-columns:1fr}}
   @media(max-width:480px){.grid{grid-template-columns:1fr}.card .val{font-size:30px}}
+  /* خريطة الزوّار */
+  #map{height:430px;width:100%;border-radius:14px;overflow:hidden;margin-top:4px;background:rgba(255,255,255,.02)}
+  .geo-list{margin-top:20px;display:flex;flex-direction:column;gap:11px}
+  .geo-row{display:flex;align-items:center;gap:12px;font-size:13.5px;color:var(--t2)}
+  .geo-row .flag{font-size:20px;line-height:1}
+  .geo-row .cname{font-weight:700;color:var(--t1);min-width:130px}
+  .geo-row .cbar{flex:1;height:8px;border-radius:999px;background:rgba(255,255,255,.06);overflow:hidden}
+  .geo-row .cbar>span{display:block;height:100%;background:var(--gold-grad);border-radius:999px}
+  .geo-row b{font-weight:800;color:var(--t1);white-space:nowrap;font-size:12.5px}
+  .geo-empty{color:var(--t3);font-size:13px;text-align:center;padding:26px}
+  .jvm-tooltip{font-family:var(--font-body)!important;font-weight:700}
+  @media(max-width:480px){#map{height:300px}.geo-row .cname{min-width:90px}}
 </style>
 </head>
 <body>
@@ -183,11 +196,21 @@
       </div>
     </div>
 
+    <!-- خريطة الزوّار -->
+    <div class="panel" style="margin-top:16px">
+      <h2>خريطة الزوّار</h2>
+      <div class="hint">من أين دخل عملاؤك؟ توزيع تقريبي حسب الدولة (يعتمد على عنوان IP) — يُحدَّث عند الضغط على «تحديث»</div>
+      <div id="map"></div>
+      <div id="geoList" class="geo-list"></div>
+    </div>
+
     <div class="footnote">
       <b>ملاحظة:</b> تتحدّث الأرقام تلقائيًا كل 20 ثانية. «الزوار الفريدون» يُحسبون مرة واحدة لكل متصفّح، و«المشاهدات» تُحسب في كل فتحة للصفحة. الخدمة مجانية وبدون تسجيل، لذلك الأرقام تقريبية وليست دقيقة 100%.
     </div>
   </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsvectormap/1.5.3/js/jsvectormap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsvectormap/1.5.3/maps/world.js"></script>
 <script>
 (function(){
   'use strict';
@@ -203,7 +226,7 @@
 
   /* بوابة الدخول */
   var gate=document.getElementById('gate'), app=document.getElementById('app');
-  function unlock(){ gate.style.display='none'; app.style.display='block'; load(); start(); }
+  function unlock(){ gate.style.display='none'; app.style.display='block'; load(); loadGeo(); start(); }
   if(sessionStorage.getItem('nbx_auth')==='1'){ unlock(); }
   document.getElementById('enter').addEventListener('click', tryPass);
   document.getElementById('pass').addEventListener('keydown', function(e){ if(e.key==='Enter') tryPass(); });
@@ -222,6 +245,38 @@
     if(s<60) return Math.round(s)+' ثانية';
     var m=Math.floor(s/60), r=Math.round(s%60);
     return m+' د '+(r?r+' ث':'');
+  }
+
+  /* ===== خريطة الزوّار حسب الدولة ===== */
+  var COUNTRIES=['DZ','MA','TN','LY','EG','MR','SD','SA','AE','QA','KW','BH','OM','YE','JO','LB','SY','IQ','PS','TR','FR','ES','IT','DE','GB','BE','NL','CH','SE','NO','PT','GR','RU','UA','PL','RO','AT','DK','IE','US','CA','MX','BR','AR','NG','SN','ML','NE','TD','CM','CI','GH','ET','KE','TZ','ZA','CD','CG','GA','BF','GN','BJ','TG','CN','JP','KR','IN','PK','BD','ID','MY','PH','TH','VN','SG','AU'];
+  var NAMES={DZ:'الجزائر',MA:'المغرب',TN:'تونس',LY:'ليبيا',EG:'مصر',MR:'موريتانيا',SD:'السودان',SA:'السعودية',AE:'الإمارات',QA:'قطر',KW:'الكويت',BH:'البحرين',OM:'عُمان',YE:'اليمن',JO:'الأردن',LB:'لبنان',SY:'سوريا',IQ:'العراق',PS:'فلسطين',TR:'تركيا',FR:'فرنسا',ES:'إسبانيا',IT:'إيطاليا',DE:'ألمانيا',GB:'بريطانيا',BE:'بلجيكا',NL:'هولندا',CH:'سويسرا',SE:'السويد',NO:'النرويج',PT:'البرتغال',GR:'اليونان',RU:'روسيا',UA:'أوكرانيا',PL:'بولندا',RO:'رومانيا',AT:'النمسا',DK:'الدنمارك',IE:'أيرلندا',US:'الولايات المتحدة',CA:'كندا',MX:'المكسيك',BR:'البرازيل',AR:'الأرجنتين',NG:'نيجيريا',SN:'السنغال',ML:'مالي',NE:'النيجر',TD:'تشاد',CM:'الكاميرون',CI:'ساحل العاج',GH:'غانا',ET:'إثيوبيا',KE:'كينيا',TZ:'تنزانيا',ZA:'جنوب أفريقيا',CD:'الكونغو الديمقراطية',CG:'الكونغو',GA:'الغابون',BF:'بوركينا فاسو',GN:'غينيا',BJ:'بنين',TG:'توغو',CN:'الصين',JP:'اليابان',KR:'كوريا الجنوبية',IN:'الهند',PK:'باكستان',BD:'بنغلاديش',ID:'إندونيسيا',MY:'ماليزيا',PH:'الفلبين',TH:'تايلاند',VN:'فيتنام',SG:'سنغافورة',AU:'أستراليا'};
+  function flag(cc){ try{ return cc.toUpperCase().replace(/./g,function(ch){ return String.fromCodePoint(127397+ch.charCodeAt(0)); }); }catch(e){ return ''; } }
+  var jvm=null;
+  function loadGeo(){
+    var gl=document.getElementById('geoList'); if(gl){ gl.innerHTML='<div class="geo-empty">جارٍ تحميل بيانات الدول…</div>'; }
+    Promise.all(COUNTRIES.map(function(c){ return get('geo-'+c).then(function(v){ return {c:c,v:v}; }); })).then(function(arr){
+      var values={}, list=[], total=0;
+      arr.forEach(function(o){ if(o.v>0){ values[o.c]=o.v; total+=o.v; list.push(o); } });
+      list.sort(function(a,b){ return b.v-a.v; });
+      var html='';
+      if(!list.length){ html='<div class="geo-empty">لا توجد بيانات بعد — ستظهر الدول على الخريطة تلقائيًا عند دخول العملاء.</div>'; }
+      else { list.forEach(function(o){ var pct= total>0?Math.round(o.v/total*100):0; html+='<div class="geo-row"><span class="flag">'+flag(o.c)+'</span><span class="cname">'+(NAMES[o.c]||o.c)+'</span><span class="cbar"><span style="width:'+pct+'%"></span></span><b>'+fmt(o.v)+' · '+pct+'%</b></div>'; }); }
+      if(gl) gl.innerHTML=html;
+      if(typeof jsVectorMap!=='undefined'){
+        if(jvm){ try{ jvm.destroy(); }catch(e){} jvm=null; }
+        var mp=document.getElementById('map');
+        if(mp){ mp.innerHTML='';
+          try{
+            jvm=new jsVectorMap({
+              selector:'#map', map:'world', zoomButtons:true, backgroundColor:'transparent',
+              regionStyle:{ initial:{ fill:'#241a3a', stroke:'#0b0518', strokeWidth:0.4 }, hover:{ fill:'#A78BFA', fillOpacity:1 } },
+              series:{ regions:[{ attribute:'fill', scale:['#3a2b63','#F5C518'], normalizeFunction:'polynomial', values:values }] },
+              onRegionTooltipShow:function(event,tooltip,code){ var v=values[code]||0; tooltip.text((NAMES[code]||tooltip.text())+': '+v+' زائر', true); }
+            });
+          }catch(e){}
+        }
+      }
+    });
   }
 
   function load(){
@@ -271,7 +326,7 @@
       btn.classList.remove('spin');
     });
   }
-  document.getElementById('refresh').addEventListener('click', load);
+  document.getElementById('refresh').addEventListener('click', function(){ load(); loadGeo(); });
   var timer;
   function start(){ clearInterval(timer); timer=setInterval(load, 20000); }
 })();
